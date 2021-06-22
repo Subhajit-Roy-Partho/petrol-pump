@@ -64,27 +64,64 @@ const useStyles = makeStyles((theme) => ({
       measurementId: "G-FVS8642R9V"
   }
   
-  export function onEnter(number){
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          var uid = user.uid;
-          console.log(uid);
-        } else {
-          console.log("Not logged in."+number)
-        }
-      });      
-  }
+  // export function onEnter(number){
+  //     // firebase.auth().onAuthStateChanged((user) => {
+  //     //   if (user) {
+  //     //     // User is signed in, see docs for a list of available properties
+  //     //     // https://firebase.google.com/docs/reference/js/firebase.User
+  //     //     var uid = user.uid;
+  //     //     console.log(uid);
+  //     //   } else {
+  //     //     console.log("Not logged in."+number)
+  //     //   }
+  //     // });
+  //     if (number == this.pass){
+  //       console.log("Pass");
+  //     }else{
+  //       console.log("Fail");
+  //     }
+  // }
 
 
 export default function Numpad(){
   const [phone, setPhone] = useState("");
     const classes = useStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [pass,setPass] = useState(0);
+   function intial(){
+    const min = 1;
+    const max = 999999;
+    const rand = Math.floor(min + Math.random() * (max - min));
+    setPass(rand);
+    console.log(rand)
+   } 
+
+   function onEnter(number){
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     // User is signed in, see docs for a list of available properties
+    //     // https://firebase.google.com/docs/reference/js/firebase.User
+    //     var uid = user.uid;
+    //     console.log(uid);
+    //   } else {
+    //     console.log("Not logged in."+number)
+    //   }
+    // });
+    if (number == pass){
+      console.log("Pass");
+    }else{
+      console.log("Fail");
+    }
+  }
     return(
         <div>
             <form className={classes.root} noValidate autoComplete="off">
+              <Button
+                variant="intial"
+                color="secondary"
+                onClick={()=>{console.log("Initialized");intial()}}>
+                  KeyCard
+                </Button>
             <NumPad.Number
                   onChange={(value) =>
                     {dispatch({ type: "positive.number", value });setPhone(value)}
